@@ -1,0 +1,1 @@
+{"name":"Instrument Playground","version":"1.0.0","entry":"main.lua","lua_host_api":">=1.0.0 <2.0.0","capabilities":["graph.core","instrument.core","audio.modules","midi.routing","sequencer.core","vst3.host","web.performance","ui.control-surfaces","hardware.apc"],"requirements":{"plugins":["Serum 2","PULSE"],"optional_devices":["APC mini mk2","Arturia MicroLab"]}}

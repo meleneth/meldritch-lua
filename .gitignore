@@ -1,0 +1,5 @@
+*.wav
+*.log
+*-project.lua
+*-edits.lua
+.luarc.json

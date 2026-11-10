@@ -1,0 +1,6 @@
+local mock = assert(loadfile("tests/mock_host.lua"))()
+local host = mock.install()
+assert(host.host_api_version() == "1.0.0")
+local discovered = host.host_capabilities()
+assert(#discovered == 13)
+assert(discovered[1].id == "audio.modules")

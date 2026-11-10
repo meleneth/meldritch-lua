@@ -1,0 +1,1 @@
+{"name":"Delay Lab Overdrive","version":"1.0.0","entry":"overdrive.lua","lua_host_api":">=1.0.0 <2.0.0","capabilities":["graph.core","instrument.core","audio.modules","sequencer.core","sequencer.persistence.v2","events.subscription","samples.bank","ui.control-surfaces"],"libraries":["meldritch.musical"]}
