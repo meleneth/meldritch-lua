@@ -1,0 +1,19 @@
+{
+  "catalog_version": 1,
+  "libraries": [
+    {
+      "id": "meldritch.musical",
+      "version": "1.0.0",
+      "entry": "musical.lua",
+      "lua_host_api": ">=1.0.0 <2.0.0",
+      "sha256": "c75f1868f3ba6794909689b54d18b0aeccba1b10e0d8379777b0292547de6090"
+    },
+    {
+      "id": "meldritch.arp",
+      "version": "1.0.0",
+      "entry": "arp.lua",
+      "lua_host_api": ">=1.0.0 <2.0.0",
+      "sha256": "c1ceb4005f127e5dbc30b1dbc1ea5edd8a843063c5f51200826f47ae8142ea2f"
+    }
+  ]
+}

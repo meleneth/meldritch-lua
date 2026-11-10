@@ -34,6 +34,28 @@ if f"Source: lua/api.yaml sha256:{source_digest}" not in annotation:
     fail("Lua annotations are stale")
 
 capabilities = {item["id"] for item in api["capabilities"]}
+catalog = load(ROOT / "libraries/catalog.json")
+if catalog.get("catalog_version") != 1:
+    fail("libraries/catalog.json has unsupported catalog_version")
+catalog_libraries = {}
+for item in catalog.get("libraries", []):
+    identifier = item.get("id", "")
+    if identifier in catalog_libraries:
+        fail(f"duplicate library {identifier}")
+    if not re.fullmatch(r"[a-z][a-z0-9-]*(\.[a-z][a-z0-9-]*)+", identifier):
+        fail(f"invalid library identifier {identifier!r}")
+    entry = Path(item.get("entry", ""))
+    if entry.is_absolute() or len(entry.parts) != 1 or entry.suffix != ".lua":
+        fail(f"{identifier}: unsafe library entry")
+    source = ROOT / "libraries" / entry
+    if not source.is_file():
+        fail(f"{identifier}: missing {entry}")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    if digest != item.get("sha256"):
+        fail(f"{identifier}: sha256 mismatch")
+    if item.get("lua_host_api", "").replace(" ", "") != ">=1.0.0<2.0.0":
+        fail(f"{identifier}: unsupported host API range")
+    catalog_libraries[identifier] = item
 allowed = {
     "name", "version", "entry", "lua_host_api", "capabilities",
     "libraries", "assets", "requirements",
@@ -61,6 +83,12 @@ for path in manifests:
     missing = set(required) - capabilities
     if missing:
         fail(f"{path}: unknown capabilities {sorted(missing)}")
+    requested_libraries = manifest.get("libraries", [])
+    if len(requested_libraries) != len(set(requested_libraries)):
+        fail(f"{path}: duplicate libraries")
+    missing_libraries = set(requested_libraries) - set(catalog_libraries)
+    if missing_libraries:
+        fail(f"{path}: unknown libraries {sorted(missing_libraries)}")
     relative = Path(manifest["entry"])
     if relative.is_absolute() or ".." in relative.parts or relative.suffix != ".lua":
         fail(f"{path}: unsafe entry")
@@ -70,4 +98,7 @@ for path in manifests:
         if not (path.parent / asset).is_file():
             fail(f"{path}: missing asset {asset}")
 
-print(f"validated Lua contract {api['version']} and {len(manifests)} applications")
+print(
+    f"validated Lua contract {api['version']}, {len(catalog_libraries)} libraries, "
+    f"and {len(manifests)} applications"
+)

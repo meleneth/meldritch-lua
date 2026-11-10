@@ -1,1 +1,1 @@
-{"name":"Delay Laboratory","version":"1.0.0","entry":"delay_lab.lua","lua_host_api":">=1.0.0 <2.0.0","capabilities":["graph.core","instrument.core","audio.modules","sequencer.core"]}
+{"name":"Delay Laboratory","version":"1.0.0","entry":"delay_lab.lua","lua_host_api":">=1.0.0 <2.0.0","capabilities":["graph.core","instrument.core","audio.modules","sequencer.core"],"libraries":["meldritch.musical","meldritch.arp"]}

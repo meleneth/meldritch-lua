@@ -25,10 +25,12 @@ meldritch perform applications/groovebox
 meldritch perform /unrelated/path/to/meldritch-lua/applications/serum-playground
 ```
 
-The engine validates the manifest's host API range and capability requirements
-before evaluating the entry script. Relative includes resolve from the
-application directory. Optional devices, plugins, assets, and environment
-requirements are declared in each manifest.
+The engine validates the manifest's host API range, capabilities, and declared
+libraries before evaluating the entry script. Configure it with
+`MELDRITCH_LUA_CATALOG=/absolute/path/to/libraries/catalog.json`; the integrated
+runner does this automatically. Relative includes resolve from the application
+directory. Optional devices, plugins, assets, and environment requirements are
+declared in each manifest.
 
 `applications/` contains independently loadable applications. `libraries/`
 contains author-side musical behavior. `examples/` contains lower-level engine
